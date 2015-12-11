@@ -1,36 +1,57 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<div>
+
+<div class="jumbotron">
   <h1>Login demo app with Python Social Auth</h1>
+  
+  {% if user and not user.is_anonymous %}
+    <p class="lead">Hello {{ user.get_full_name|default:user.username }}!</p>
+    <small>This is your profile picture</small>
+    <img src="{{ profile.photo }}" class="img-account">
+    <br>
+    Email: {{ user.email }} <br>
+    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+  {% else %}
+    <h3>Select login option:</h3>
+    {% load staticfiles %}
+    <div>
+      <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" title="Facebook">
+          <img class='social-icns' src="{% static "img/login-with-fb.png" %}">
+      </a>
 
-  <p>
-    <ul>
-      {% if user and not user.is_anonymous %}
-        <h1>Hello {{ user.get_full_name|default:user.username }}!</h1>
-        <small>This is your profile picture</small>
-        <img src="{{ profile.photo }}" class="img-account">
-        <br>
-        Email: {{ user.email }} <br>
-        <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
-      {% else %}
-        <h3>Select login option:</h3>
-        {% load staticfiles %}
-        <div>
-          <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" title="Facebook">
-              <img class='social-icns' src="{% static "img/login-with-fb.png" %}">
-          </a>
+      <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}" title="Twitter">
+          <img class='social-icns' src="{% static "img/login-with-twitter.png" %}">
+      </a>
 
-          <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}" title="Twitter">
-              <img class='social-icns' src="{% static "img/login-with-twitter.png" %}">
-          </a>
+      <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}" title="Google">
+          <img class='social-icns' src="{% static "img/login-with-google.png" %}">
+      </a>
+    </div>
+  {% endif %}
+</div>
 
-          <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}" title="Google">
-              <img class='social-icns' src="{% static "img/login-with-google.png" %}">
-          </a>
-        </div>
-      {% endif %}
-    </ul>
-  </p>
+<div class="row marketing">
+  <div class="col-lg-6">
+    <h4>Subheading</h4>
+    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+    <h4>Subheading</h4>
+    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+    <h4>Subheading</h4>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Subheading</h4>
+    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+    <h4>Subheading</h4>
+    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+    <h4>Subheading</h4>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+  </div>
 </div>
 {% endblock %}
