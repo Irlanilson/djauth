@@ -7,7 +7,7 @@
   
   {% if user and not user.is_anonymous %}
     <p class="lead">Hello {{ user.get_full_name|default:user.username }}!</p>
-    <small>This is your profile picture</small>
+    <small>This is your profile picture</small><br>
     <img src="{{ profile.photo }}" class="img-account">
     <br>
     Email: {{ user.email }} <br>
